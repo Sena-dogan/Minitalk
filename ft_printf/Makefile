@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zdogan <zdogan@student.42.fr>              +#+  +:+       +#+         #
+#    By: z.sena <z.sena@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/18 10:02:55 by zdogan            #+#    #+#              #
-#    Updated: 2022/08/28 02:09:49 by zdogan           ###   ########.fr        #
+#    Updated: 2023/02/08 18:38:54 by z.sena           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ $(NAME): $(OBJS)
 	ar rcs $(NAME) $(OBJS)
 
 clean:
+	make clean -C libft
 	rm -f $(OBJS)
 
 fclean: clean

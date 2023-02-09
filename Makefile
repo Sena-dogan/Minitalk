@@ -5,45 +5,46 @@
 #                                                     +:+ +:+         +:+      #
 #    By: z.sena <z.sena@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/02/07 17:46:02 by z.sena            #+#    #+#              #
-#    Updated: 2023/02/07 22:12:38 by z.sena           ###   ########.fr        #
+#    Created: 2023/02/09 16:16:26 by z.sena            #+#    #+#              #
+#    Updated: 2023/02/09 16:16:29 by z.sena           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minitalk.a
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-CLIENT = client
+
+CC=gcc
+CFLAGS=-Wall -Wextra -Werror
+printf= ft_printf/libftprintf.a
+
+CLİENT = client
 SERVER = server
 
-CLIENT_SRC = client.c
-SERVER_SRC = server.c
+all: skyline $(printf) $(SERVER) $(CLİENT) 
 
-CLIENT_OBJ = $(CLIENT_SRC:.c=.o)
-SERVER_OBJ = $(SERVER_SRC:.c=.o)
-
-PRINTF_AR = ft_printf/libftprintf.a
-
-all: $(NAME)
-
-$(NAME): $(CLIENT_OBJ) $(SERVER_OBJ)
+$(printf):
 	@make -C ft_printf
-	@ar rc $(NAME) $(CLIENT_OBJ) $(SERVER_OBJ) $(PRINTF_AR)
-	@ranlib $(NAME)
-	@$(CC) $(CFLAGS) $(CLIENT_OBJ) $(PRINTF_AR) -o $(CLIENT)
-	@$(CC) $(CFLAGS) $(SERVER_OBJ) $(PRINTF_AR) -o $(SERVER)
 
-%.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@
-	
+$(SERVER): $(printf)
+	$(CC) $(CFLAGS) server.c $(printf) -o server
+
+$(CLİENT): $(printf)
+	$(CC) $(CFLAGS) client.c $(printf) -o client
+
 clean:
-	@make clean -C ft_printf
-	@rm -f $(CLIENT_OBJ) $(SERVER_OBJ)
+	rm -f *.o
+	make clean -C ft_printf
 
 fclean: clean
-	@make fclean -C ft_printf
-	@rm -f $(NAME) $(CLIENT) $(SERVER)
+	make fclean -C ft_printf
+	rm -f server client
+
+skyline:
+	@clear
+	@echo "__ / ____ I ____ I ____ \\ __"
+	@echo "(⭕⭕ \\ ...SKYLINE.../ ⭕⭕)"
+	@echo "(\\ __ / ____________ \\ __ /)"
+	@echo "I_Oo_I ____.......____l_oO_|"
+	@echo 
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean coffee re
